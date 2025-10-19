@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+// useRouter is removed as it was unused, fixing the warning from the build log.
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 
 // --- TYPE DEFINITIONS ---
@@ -286,7 +286,7 @@ const SignupCard = ({ form, status, isValid, set, submit }: {
 )
 
 export default function Home() {
-  const router = useRouter()
+  // const router = useRouter() // Removed the unused variable to fix the warning
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle')
   const [form, setForm] = useState<FormState>({
     fullName: '',
@@ -467,6 +467,7 @@ export default function Home() {
               <h3 className="mt-2 text-xl font-medium">{feature.title}</h3>
               <p className="mt-2 text-gray-700" dangerouslySetInnerHTML={{ __html: feature.description }} />
               {feature.link && (
+                // Using <a> tag here as the feature links externally or navigates using the full page reload for now.
                 <a href={feature.link} className="mt-3 inline-block text-sm font-medium text-brand-red hover:underline">
                   Learn More &rarr;
                 </a>

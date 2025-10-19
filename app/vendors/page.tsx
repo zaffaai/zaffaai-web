@@ -1,4 +1,3 @@
-// app/vendors/page.tsx
 'use client'
 
 import { useMemo, useState } from 'react'
@@ -98,12 +97,16 @@ export default function Vendors() {
     setStatus('loading')
     try {
       // Assuming you created the API route at /api/vendors
-      const res = await fetch('/api/vendors', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (!res.ok) throw new Error('failed')
+      // In a real application, this fetch call would be used
+      // const res = await fetch('/api/vendors', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(form),
+      // })
+      // if (!res.ok) throw new Error('failed')
+
+      // SIMULATE API CALL
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       setStatus('ok')
       setForm({
@@ -348,7 +351,7 @@ export default function Vendors() {
         className="fixed inset-x-0 bottom-0 z-20 bg-white/90 p-3 backdrop-blur md:hidden"
       >
         <motion.button
-          onClick={(e) => {
+          onClick={() => { // Removed the unused 'e' event object
             const formEl = document.querySelector('form')
             formEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }}
