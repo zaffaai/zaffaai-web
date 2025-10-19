@@ -1,6 +1,8 @@
+// app/layout.tsx
 import './globals.css'
 import type { Metadata } from 'next'
 import Footer from '@/components/Footer'
+import PageTransitionWrapper from '@/components/PageTransitionWrapper' // Import the new wrapper
 
 export const metadata: Metadata = {
   title: 'Zaffa AI — Plan beautifully, stress less',
@@ -27,8 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-brand-cream text-brand-charcoal antialiased">
-        {children}
-        <Footer /> {/* 👈 this ensures footer shows on every page */}
+        {/* Wrap the core page content with the PageTransitionWrapper */}
+        <PageTransitionWrapper>
+          {children}
+        </PageTransitionWrapper>
+        <Footer />
       </body>
     </html>
   )

@@ -15,15 +15,15 @@ export default function Contact() {
         <h2 className="text-lg font-medium">Email</h2>
         <p className="mt-1 text-gray-700">
           <a href="mailto:team@zaffa.ai?subject=Hello%20Zaffa%20AI" className="text-brand-red underline">
-            team@zaffa.ai
+            team@zaffa.ai (Coming Soon)
           </a>
         </p>
 
         <h2 className="mt-6 text-lg font-medium">Social</h2>
         <ul className="mt-1 space-y-1 text-gray-700">
-          <li><a className="underline" href="https://www.linkedin.com" target="_blank">LinkedIn</a></li>
-          <li><a className="underline" href="https://x.com" target="_blank">X (Twitter)</a></li>
-          <li><a className="underline" href="https://instagram.com" target="_blank">Instagram</a></li>
+          <li><a className="underline" href="https://www.linkedin.com/company/zaffa-ai/" target="_blank">LinkedIn</a></li>
+          <li><a className="underline" href="https://x.com" target="_blank">X (Twitter) - Coming Soon</a></li>
+          <li><a className="underline" href="https://instagram.com" target="_blank">Instagram - Coming Soon</a></li>
         </ul>
       </div>
 

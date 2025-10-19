@@ -1,7 +1,43 @@
+// app/vendors/page.tsx
 'use client'
 
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
+// 1. Import motion and Easing
+import { motion, Easing } from 'framer-motion' 
+
+// --- ANIMATION CONFIGURATION ---
+// Re-use the smooth easing curve
+const easeOutCubic = [0, 0.55, 0.45, 1] as Easing; 
+
+// Variants for the main container (to stagger the children, like the header text)
+const sectionVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: easeOutCubic,
+      staggerChildren: 0.08, // Subtle stagger for form groups/text
+    },
+  },
+}
+
+// Variants for individual elements (text, form fields)
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.4, 
+      ease: easeOutCubic
+    } 
+  },
+}
+// -------------------------------
+
 
 type FormState = {
   businessName: string
@@ -61,6 +97,7 @@ export default function Vendors() {
 
     setStatus('loading')
     try {
+      // Assuming you created the API route at /api/vendors
       const res = await fetch('/api/vendors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -69,7 +106,6 @@ export default function Vendors() {
       if (!res.ok) throw new Error('failed')
 
       setStatus('ok')
-      // Clear form before redirect so back nav doesn’t repopulate
       setForm({
         businessName: '', contactName: '', email: '', phone: '',
         city: '', category: '', website: '', instagram: '',
@@ -83,34 +119,48 @@ export default function Vendors() {
   }
 
   return (
-    <main className="min-h-screen bg-brand-cream text-brand-charcoal">
+    <motion.main
+      // Apply the main animation to the whole page content
+      variants={sectionVariants}
+      initial="hidden"
+      animate="visible"
+      className="min-h-screen bg-brand-cream text-brand-charcoal"
+    >
       {/* Header / pitch */}
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 bg-brand-red/10 blur-3xl animate-blob" />
-        <div className="pointer-events-none absolute -bottom-20 -right-16 h-80 w-80 bg-rose/60 blur-3xl animate-blob" />
+        {/* Animated Background Elements */}
+        <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 bg-brand-red/10 blur-3xl opacity-50 animate-blob" />
+        <div className="pointer-events-none absolute -bottom-20 -right-16 h-80 w-80 bg-rose-300/60 blur-3xl opacity-50 animate-blob" style={{ animationDelay: '-6s' }} />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-brand-cream to-brand-cream" />
 
         <div className="mx-auto max-w-3xl px-6 pt-14 pb-6">
-          <h1 className="text-3xl font-semibold">Vendor pre-registration</h1>
-            <p className="mt-2 text-gray-700">
-              Be among the first vendors couples see when Zaffa AI launches in Egypt — UAE next.
-              Early vendors get <strong>premium visibility</strong>, a clean profile, and
-              <strong> pre-qualified leads</strong>.
-            </p>
+          {/* Animated Header Text */}
+          <motion.h1 variants={itemVariants} className="text-3xl font-semibold">
+            Vendor pre-registration
+          </motion.h1>
+          <motion.p variants={itemVariants} className="mt-2 text-gray-700">
+            Be among the first vendors couples see when Zaffa AI launches in Egypt — UAE next.
+            Early vendors get <strong className="text-brand-red">premium visibility</strong>, a clean profile, and
+            <strong className="text-brand-red"> pre-qualified leads</strong>.
+          </motion.p>
 
-          <ul className="mt-4 text-sm text-gray-700">
+          {/* Animated list of benefits */}
+          <motion.ul variants={itemVariants} className="mt-4 text-sm text-gray-700 list-disc pl-5">
             <li> Show your work & availability</li>
             <li> Get matched to couples by city, category, and budget</li>
             <li> Chat leads directly via your profile</li>
-          </ul>
+          </motion.ul>
         </div>
       </section>
 
-      {/* Form */}
+      {/* Form Section */}
       <section className="mx-auto max-w-3xl px-6 pb-14">
-        <form
+        {/* 💥 IMPROVEMENT: Form Wrapper with Interactive Hover */}
+        <motion.form
           onSubmit={submit}
-          className="mt-4 rounded-2xl border bg-white p-6 shadow-lg transition hover:-translate-y-0.5"
+          whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)' }} 
+          transition={{ type: "spring", stiffness: 300 }}
+          className="mt-4 rounded-3xl border bg-white p-6 shadow-xl"
           aria-label="Vendor pre-registration form"
         >
           {/* hidden honeypot */}
@@ -124,33 +174,38 @@ export default function Vendors() {
             aria-hidden="true"
           />
 
+          {/* Form Fields - Each field group is wrapped in a motion.div */}
           <div className="grid gap-5 sm:grid-cols-2">
-            <div className="sm:col-span-2">
+            
+            {/* Business Name */}
+            <motion.div variants={itemVariants} className="sm:col-span-2">
               <label className="block text-sm font-medium">Business name *</label>
               <input
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.businessName}
                 onChange={(e) => set('businessName', e.target.value)}
                 required
                 placeholder="e.g., Desert Bloom Decor"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Contact Name */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Contact name</label>
               <input
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.contactName}
                 onChange={(e) => set('contactName', e.target.value)}
                 placeholder="e.g., Mariam Hassan"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Email */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Email *</label>
               <input
                 type="email"
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.email}
                 onChange={(e) => set('email', e.target.value)}
                 required
@@ -159,34 +214,37 @@ export default function Vendors() {
                 autoComplete="email"
               />
               <p className="mt-1 text-xs text-gray-500">We’ll send early-access details here.</p>
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Phone */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Phone</label>
               <input
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.phone}
                 onChange={(e) => set('phone', e.target.value)}
                 placeholder="+20 1X XXX XXXX"
                 inputMode="tel"
                 autoComplete="tel"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            {/* City */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">City</label>
               <input
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.city}
                 onChange={(e) => set('city', e.target.value)}
                 placeholder="e.g., Cairo"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Category */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Category</label>
               <select
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.category}
                 onChange={(e) => set('category', e.target.value)}
               >
@@ -194,12 +252,13 @@ export default function Vendors() {
                 {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
               </select>
               <p className="mt-1 text-xs text-gray-500">Choose the closest match.</p>
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Price range */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Price range</label>
               <select
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.priceRange}
                 onChange={(e) => set('priceRange', e.target.value)}
               >
@@ -207,62 +266,69 @@ export default function Vendors() {
                 {PRICE.map((p) => <option key={p}>{p}</option>)}
               </select>
               <p className="mt-1 text-xs text-gray-500">$ = budget-friendly, $$$$ = premium</p>
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Website */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Website</label>
               <input
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.website}
                 onChange={(e) => set('website', e.target.value)}
                 placeholder="https://…"
                 inputMode="url"
                 autoComplete="url"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Instagram */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Instagram</label>
               <input
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.instagram}
                 onChange={(e) => set('instagram', e.target.value)}
                 placeholder="https://instagram.com/yourpage"
                 inputMode="url"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            {/* Availability month */}
+            <motion.div variants={itemVariants}>
               <label className="block text-sm font-medium">Availability month</label>
               <input
                 placeholder="e.g., Nov 2025"
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.availabilityMonth}
                 onChange={(e) => set('availabilityMonth', e.target.value)}
               />
-            </div>
+            </motion.div>
 
-            <div className="sm:col-span-2">
+            {/* Notes (Full Width) */}
+            <motion.div variants={itemVariants} className="sm:col-span-2">
               <label className="block text-sm font-medium">Notes</label>
               <textarea
                 rows={4}
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border px-3 py-2 focus:border-brand-red focus:ring-brand-red"
                 value={form.notes}
                 onChange={(e) => set('notes', e.target.value)}
                 placeholder="Tell us anything that helps us match you better."
               />
-            </div>
+            </motion.div>
           </div>
 
           {err && <p className="mt-4 text-sm text-red-600">{err}</p>}
 
-          <button
+          {/* 💥 IMPROVEMENT: Button with Micro-Animation */}
+          <motion.button
             type="submit"
             disabled={status === 'loading'}
-            className="mt-6 w-full rounded-md bg-brand-red px-4 py-2 text-white transition hover:brightness-110 disabled:opacity-60"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="mt-6 w-full rounded-md bg-brand-red px-4 py-3 text-white font-semibold transition hover:brightness-110 disabled:opacity-60"
           >
             {status === 'loading' ? 'Submitting…' : 'Join the vendor network'}
-          </button>
+          </motion.button>
 
           {status === 'ok' && (
             <p className="mt-3 text-sm text-green-600">Thanks! We’ll reach out soon.</p>
@@ -273,21 +339,26 @@ export default function Vendors() {
           <p className="mt-3 text-xs text-gray-500">
             By submitting, you agree to receive early-access updates.
           </p>
-        </form>
+        </motion.form>
       </section>
 
-      {/* Sticky bar on small screens */}
-      <div className="fixed inset-x-0 bottom-0 z-20 bg-white/90 p-3 backdrop-blur md:hidden">
-        <button
+      {/* Sticky bar on small screens (also animated) */}
+      <motion.div 
+        variants={itemVariants}
+        className="fixed inset-x-0 bottom-0 z-20 bg-white/90 p-3 backdrop-blur md:hidden"
+      >
+        <motion.button
           onClick={(e) => {
             const formEl = document.querySelector('form')
             formEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }}
+          // Interactive button
+          whileTap={{ scale: 0.98 }}
           className="mx-auto block w-full max-w-md rounded-md bg-brand-red px-4 py-2 text-white"
         >
           Pre-register now
-        </button>
-      </div>
-    </main>
+        </motion.button>
+      </motion.div>
+    </motion.main>
   )
 }
