@@ -54,15 +54,21 @@ const IconMapPin = () => (
     </IconWrapper>
 );
 
-// 2. Lightbulb (Nour — AI Assistant)
-const IconLightbulb = () => (
+// 2. Magic Spark (AI Generator/Assistant)
+const IconMagicSpark = () => (
     <IconWrapper>
-        <path d="M15 14c.2-.9.7-1.7 1.4-2.2.7-.5 1.7-1 2.2-1.4"></path>
-        <path d="M15 21c-1.8 0-3.6-.8-4.9-2.1-1.3-1.3-2.1-3.1-2.1-4.9"></path>
-        <path d="M9 3v2"></path>
-        <path d="M15 3v2"></path>
-        <path d="M12 3a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-        <path d="M12 18h.01"></path>
+        {/* The center of the spark */}
+        <circle cx="12" cy="12" r="3"></circle>
+        
+        {/* The four main points of the sparkle */}
+        <path d="M12 2v3"></path>
+        <path d="M12 19v3"></path>
+        <path d="M21 12h-3"></path>
+        <path d="M6 12H3"></path>
+        
+        {/* Two smaller, offset sparks for effect */}
+        <path d="M5 5l2 2"></path>
+        <path d="M17 17l2 2"></path>
     </IconWrapper>
 );
 
