@@ -5,6 +5,19 @@ import React from 'react';
 // to satisfy component requirements in this specific environment.
 const BOUQUET_IMAGE_SRC = "/logo/zaffa-bouquet.png";
 
+// Inline SVG for the AI Assistant icon (a sparkle)
+const SparkleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    {...props}
+  >
+    <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+  </svg>
+);
+
+
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
@@ -16,8 +29,8 @@ export default function Hero() {
       <img
         src={BOUQUET_IMAGE_SRC}
         alt="Stylized floral bouquet watermark" // Added descriptive alt text
-        aria-hidden="false" // Changed to false, as it contains content that should be hidden for styling only if necessary, but here, alt text is provided.
-        loading="lazy" // Added lazy loading as a best practice for images below the fold
+        aria-hidden="false" 
+        loading="lazy" 
         className="pointer-events-none absolute right-[-60px] top-10 h-52 opacity-10 animate-float"
       />
 
@@ -31,13 +44,15 @@ export default function Hero() {
               Plan beautifully. Stress less.
             </h1>
             <p className="mt-4 text-lg text-gray-600">
-              **Zaffa AI** is your smart copilot for wedding planning—discover trusted vendors, manage budgets & guestlists, and get instant answers in Arabic or English.
+              <strong>Zaffa AI</strong> is your smart copilot for wedding planning—discover trusted vendors, manage budgets & guestlists, and get instant answers in Arabic or English.
             </p>
             <ul className="mt-6 space-y-2 text-gray-700">
-              <li>• Vendor discovery tailored for **Egypt & GCC**</li>
+              <li>• Vendor discovery tailored for <strong>Egypt & GCC</strong></li>
               <li>• Guestlist, RSVP, and budget tracking in one place</li>
-              <li>
-                • <span className="font-medium">Nour</span> — your AI assistant for quick, local answers
+              <li className="flex items-center space-x-2">
+                {/* ADDED: New Sparkle Icon */}
+                <SparkleIcon className="h-5 w-5 text-brand-red inline-block mr-1" aria-hidden="true" /> 
+                <span className="font-medium">Nour</span> — your AI assistant for quick, local answers
               </li>
             </ul>
           </div>

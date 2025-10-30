@@ -341,22 +341,6 @@ export default function Home() {
 
   return (
     <motion.main initial="hidden" animate="visible" variants={staggerContainer} className="bg-brand-cream text-brand-charcoal">
-      
-      {/* Floating Sticky CTA Bar (Mobile Only) */}
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 1 }}
-        className="fixed inset-x-0 bottom-0 z-50 bg-white/90 p-4 shadow-2xl backdrop-blur-md lg:hidden"
-      >
-        <SignupCard 
-          form={form} 
-          status={status} 
-          isValid={isValid} 
-          set={set} 
-          submit={submit} 
-        />
-      </motion.div>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-8 pb-20">

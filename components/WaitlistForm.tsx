@@ -48,7 +48,13 @@ slot.appendChild(form)
 return (
 <form onSubmit={submit} className="mt-2">
 <label className="mt-4 block text-sm font-medium">Full name</label>
-<input className="mt-1 w-full rounded-md border px-3 py-2" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Mazen / Nada" />
+{/* Updated placeholder to be more generic */}
+<input 
+  className="mt-1 w-full rounded-md border px-3 py-2" 
+  value={name} 
+  onChange={(e)=>setName(e.target.value)} 
+  placeholder="Your Full Name" 
+/>
 
 
 <label className="mt-4 block text-sm font-medium">Email</label>
@@ -73,4 +79,3 @@ return (
 </form>
 )
 }
-

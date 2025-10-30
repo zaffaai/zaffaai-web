@@ -344,24 +344,6 @@ export default function Vendors() {
           </p>
         </motion.form>
       </section>
-
-      {/* Sticky bar on small screens (also animated) */}
-      <motion.div 
-        variants={itemVariants}
-        className="fixed inset-x-0 bottom-0 z-20 bg-white/90 p-3 backdrop-blur md:hidden"
-      >
-        <motion.button
-          onClick={() => { // Removed the unused 'e' event object
-            const formEl = document.querySelector('form')
-            formEl?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          }}
-          // Interactive button
-          whileTap={{ scale: 0.98 }}
-          className="mx-auto block w-full max-w-md rounded-md bg-brand-red px-4 py-2 text-white"
-        >
-          Pre-register now
-        </motion.button>
-      </motion.div>
     </motion.main>
   )
 }
