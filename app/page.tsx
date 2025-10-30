@@ -167,7 +167,7 @@ const features = [
   {
     title: 'Nour — AI Assistant',
     description: 'Chat in Arabic or English for recommendations, checklists, and local tips, powered by ChatGPT/LLMs to provide smart, context-aware advice.',
-    icon: IconLightbulb,
+    icon: IconMagicSpark,
   },
   {
     title: 'Guestlist & RSVP',
