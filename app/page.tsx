@@ -155,12 +155,12 @@ const Marquee = () => (
 const features = [
   {
     title: 'Smart Vendor Discovery',
-    description: 'Search by city, category, and budget. See transparent details and reviews you can trust, powered by **Supabase** for reliability.',
+    description: 'Search by city, category, and budget. See transparent details and reviews you can trust, powered by Supabase for reliability.',
     icon: IconMapPin,
   },
   {
     title: 'Nour — AI Assistant',
-    description: 'Chat in Arabic or English for recommendations, checklists, and local tips, powered by **ChatGPT/LLMs** to provide smart, context-aware advice.',
+    description: 'Chat in Arabic or English for recommendations, checklists, and local tips, powered by ChatGPT/LLMs to provide smart, context-aware advice.',
     icon: IconLightbulb,
   },
   {
@@ -359,7 +359,7 @@ export default function Home() {
             </motion.h1>
 
             <motion.p variants={item} className="mt-6 text-lg text-gray-700">
-              Vendor discovery, real budgets, RSVPs, and **Nour** — an AI copilot that speaks Arabic and understands local pricing.
+              Vendor discovery, real budgets, RSVPs, and Nour — an AI copilot that speaks Arabic and understands local pricing.
             </motion.p>
 
             <motion.ul variants={item} className="mt-6 space-y-3 text-gray-700 list-disc pl-5">
